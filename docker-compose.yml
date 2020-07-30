@@ -48,6 +48,14 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
       - /var/run/php/php7.4-fpm.sock:/var/run/php/php7.4-fpm.sock
 
+  apache:
+    image: httpd:2.4.43
+    ports:
+      - 88:88
+    volumes:
+      - ./docker/apache:/usr/local/apache2/htdocs
+      - ./docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+
 volumes:
   redis-data:
   mongo-data:
