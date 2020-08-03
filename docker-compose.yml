@@ -55,6 +55,7 @@ services:
     working_dir: /var/www/app
     user: "1000:1000"
 
+
 volumes:
   redis-data:
   mongo-data:
