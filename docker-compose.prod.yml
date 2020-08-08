@@ -1,6 +1,21 @@
 version: "3"
 
 services:
+  nginx:
+    image: smersh/docker-course:nginx
+    ports:
+      - 80:80
+
+  apache:
+    image: smersh/docker-course:apache
+    ports:
+      - 88:80
+
+  php:
+    image: smersh/docker-course:php
+    volumes:
+      - runtime:/var/www/app/runtime
+
   redis:
     image: redis:4.0.9
     volumes:
@@ -30,21 +45,6 @@ services:
 #      MYSQL_USER: root
     volumes:
       - mysql-data:/var/lib/mysql
-
-  nginx:
-    image: smersh/docker-course:nginx
-    ports:
-      - 80:80
-
-  apache:
-    image: smersh/docker-course:apache
-    ports:
-      - 88:80
-
-  php:
-    image: smersh/docker-course:php
-    volumes:
-      - runtime:/var/www/app/runtime
 
 volumes:
   redis-data:
