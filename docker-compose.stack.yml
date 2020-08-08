@@ -1,0 +1,69 @@
+version: "3"
+
+services:
+  nginx:
+    image: smersh/docker-course:nginx
+    ports:
+      - 80:80
+
+  apache:
+    image: smersh/docker-course:apache
+#    restart: always
+    ports:
+      - 98:80
+
+  php:
+    image: smersh/docker-course:php
+    volumes:
+      - runtime:/var/www/app/runtime
+
+  redis:
+    image: redis:4.0.9
+    deploy:
+      placement:
+        constraints:
+          - "node.role==manager"
+    volumes:
+      - redis-data:/data
+    command: '--appendonly yes'
+
+  mongodb:
+    image: mongo:3.6.3
+    deploy:
+      placement:
+        constraints:
+          - "node.role==manager"
+    volumes:
+      - mongo-data:/data/db
+
+  postgres:
+    image: postgres:10.12
+    deploy:
+      placement:
+        constraints:
+          - "node.role==manager"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres_db
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  mysql:
+    image: mysql:5.7.30
+    deploy:
+      placement:
+        constraints:
+          - "node.role==manager"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mysql_db
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  redis-data:
+  mongo-data:
+  pg-data:
+  mysql-data:
+  runtime:
